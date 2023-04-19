@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>路线详情</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/route-detail.css">
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<!--引入头部-->
+<div id="header"></div>
+    <!-- 详情 start -->   
+    <div class="wrap">
+        <div class="bread_box">
+
+        </div>
+        <div class="prosum_box">
+            <h1 class="title"><b>文章标题</b></h1>
+            <p class="infor">作者:<span>胡适</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间:<span>2022-6-13</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;收藏数:<span>2000</span></p>
+            <hr>
+            <p class="content">“四个全面”战略布局是国家发展的宏伟战略，而“全面深化改革”也是高等教育发展的重要纲领。5月27日~29日，我校成功召开了“第七届教职工代表大会暨工会会员代表大会”，本次会议的成功召开，为我校“十三五”期间的发展指明了方向，明确了任务。推进“招生录取体制改革”是学校深入实施“八大工程”的重点建设任务，更是教务处当前工作中的一项具体措施。
+
+                教务处以服务地方经济建设发展为目标，完善招生录取工作制度为手段，开创工作思维，开拓工作思路，开辟新的发展方向。在2016年度的云南省“专升本”招生录取工作过程中，我校在继续开展好传统招生录取模式工作任务的基础上，成功的探索了“免试录取”模式。在上级教育主管部门的正确领导下，我校积极思考、严密组织、认真执行，并于6月14日组织“专家组”对符合条件的申报者开展了“免试录取”综合测试工作，测试结果经6月14日~20日的公示，没有接收到任务投诉与举报，目前正在开展后期“特殊类型招生”的录取程序，总体看来，本次改革已实现了我校“首批免试录取考生”的录取，并推动学校招生规模的进一步扩大（截止到7月4日，专升本扩招比例为54%、2016年专升本计划完成率为154%），改革工作取得了预期的效果。
+                
+                本次“特殊类型招生改革”的成功探索，既积累了教务管理部门开展多元化人才评价的经验，更是教务处结合“两学一做”工作、积极贯彻落实学校“两会”的相关精神的具体体现。我们将在认真总结本次改革经验的基础，进一步思考与谋划相关工作，不断推进“招生录取体制改革”工作进入深水区。</p>
+        </div>
+        
+    </div>
+    <!-- 详情 end -->
+
+    <!--引入头部-->
+    <div id="footer"></div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery-3.3.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--导入布局js，共享header和footer-->
+    <script type="text/javascript" src="js/include.js"></script>
+    <script src="js/getParameter.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            //自动播放
+            goImg();
+            // var timer = setInterval("auto_play()", 5000);
+        });
+        function goImg(){
+            //焦点图效果
+            //点击图片切换图片
+            $('.little_img').on('mousemove', function() {
+                $('.little_img').removeClass('cur_img');
+                var big_pic = $(this).data('bigpic');
+                $('.big_img').attr('src', big_pic);
+                $(this).addClass('cur_img');
+            });
+            //上下切换
+            var picindex = 0;
+            var nextindex = 4;
+            $('.down_img').on('click',function(){
+                var num = $('.little_img').length;
+                if((nextindex + 1) <= num){
+                    $('.little_img:eq('+picindex+')').hide();
+                    $('.little_img:eq('+nextindex+')').show();
+                    picindex = picindex + 1;
+                    nextindex = nextindex + 1;
+                }
+            });
+            $('.up_img').on('click',function(){
+                var num = $('.little_img').length;
+                if(picindex > 0){
+                    $('.little_img:eq('+(nextindex-1)+')').hide();
+                    $('.little_img:eq('+(picindex-1)+')').show();
+                    picindex = picindex - 1;
+                    nextindex = nextindex - 1;
+                }
+            });
+        }
+        //自动轮播方法
+        function auto_play() {
+            var cur_index = $('.prosum_left dd').find('a.cur_img').index();
+            cur_index = cur_index - 1;
+            var num = $('.little_img').length;
+            var max_index = 3;
+            if ((num - 1) < 3) {
+                max_index = num - 1;
+            }
+            if (cur_index < max_index) {
+                var next_index = cur_index + 1;
+                var big_pic = $('.little_img:eq(' + next_index + ')').data('bigpic');
+                $('.little_img').removeClass('cur_img');
+                $('.little_img:eq(' + next_index + ')').addClass('cur_img');
+                $('.big_img').attr('src', big_pic);
+            } else {
+                var big_pic = $('.little_img:eq(0)').data('bigpic');
+                $('.little_img').removeClass('cur_img');
+                $('.little_img:eq(0)').addClass('cur_img');
+                $('.big_img').attr('src', big_pic);
+            }
+        }
+
+
+        $(function () {
+
+            
+
+            //1.获取rid
+            var rid = getParameter("rid");
+
+            //2.发送请求请求 route/findOne
+            $.get("route/findOne",{rid:rid},function (route) {
+                //3.解析数据填充html
+                $("#rname").html(route.rname);
+                $("#routeIntroduce").html(route.routeIntroduce);
+                $("#price").html("¥"+route.price);
+                $("#sname").html(route.seller.sname);
+                $("#consphone").html(route.seller.consphone);
+                $("#address").html(route.seller.address);
+                $("#count").html("已收藏"+route.count+"次");
+                //图片展示
+
+                var ddstr = '<a class="up_img up_img_disable"></a>';
+                var dtstr='<img alt="" class="big_img" src="'+route.routeImgList[0].bigPic+'">';
+                //遍历routeImgList
+                for (var i = 0; i < route.routeImgList.length; i++) {
+                    var astr ;
+                    if(i >= 4){
+                        astr = '<a title="" class="little_img" data-bigpic="'+route.routeImgList[i].bigPic+'" style="display:none;">\n' +
+                            '                        <img src="'+route.routeImgList[i].smallPic+'">\n' +
+                            '                    </a>';
+                    }else{
+                        astr = '<a title="" class="little_img" data-bigpic="'+route.routeImgList[i].bigPic+'">\n' +
+                            '                        <img src="'+route.routeImgList[i].smallPic+'">\n' +
+                            '                    </a>';
+                    }
+                    ddstr += astr;
+                }
+                ddstr+='<a class="down_img down_img_disable" style="margin-bottom: 0;"></a>';
+                $("#dd").html(ddstr);
+                $("#dt").html(dtstr);
+                //图片展示和切换代码调用
+                goImg();
+            });
+        });
+        $(function (){
+            var rid = getParameter("rid");
+            $.get("route/isFavorite",{rid:rid},function (flag){
+                if(flag){
+                    $("#favorite").addClass("already");
+                    $("#favorite").attr("disabled","disabled");
+                    $("#favorite").removeAttr("onclick");
+                }else{
+
+                }
+            })
+        })
+
+        function addFavorite(){
+            var rid = getParameter("rid");
+            $.get("user/findOne",{},function (user){
+                if(user){
+                    $.get("route/addFavorite",{rid:rid},function (){
+                        location.reload();
+                    })
+                }else{
+                    alert("您尚未登录，请登录");
+                    location.href="http://localhost:8080/travel/login.html";
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

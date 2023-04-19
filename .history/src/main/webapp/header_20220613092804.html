@@ -1,0 +1,81 @@
+<!-- 头部 start -->
+<script src="js/getParameter.js" ></script>
+<link rel="stylesheet" type="text/css" href="css/header.css">
+<script>
+    $(function (){
+        //查询用户信息
+        $.get("user/findOne",{},function (data){
+            var msg="欢迎回来，"+data.name;
+            $("#span_username").html(msg);
+        })
+        //查询分类信息
+        $.get("category/findAll",{},function (data){
+            var lis='<li><a href="index.html"><button type="button" class="btn btn-primary">首页</button></a></li>';
+            //遍历数组，拼接字符串
+            for(var i=0;i<data.length;i++){
+                var li='<li><a href="route_list.html?cid='+data[i].cid+'"><button type="button" class="btn btn-primary">'+data[i].cname+'</button></a></li>';
+                lis+=li;
+            }
+            //拼接收藏排行榜
+            lis+='<li><a href="favoriterank.html"><button type="button" class="btn btn-primary">收藏排行榜</button></a></li>';
+            $("#category").html(lis);
+        })
+
+        //搜索按钮绑定单机事件，获取输入框内容
+        $("#search-button").click(function (){
+            var rname=$("#search_input").val();
+            var cid=getParameter("cid");
+            location.href="http://localhost:8080/travel/route_list.html?cid="+cid+"&rname="+rname;
+        })
+    })
+</script>
+    <header id="header">
+        
+        <div class="shortcut">
+            <!-- 未登录状态  -->
+            <div class="login_out">
+                <a href="login.html"><button type="button" class="btn btn-success">登录</button></a>
+                <a href="register.html"><button type="button" class="btn btn-success">注册</button></a>
+            </div>
+            <!-- 登录状态  -->
+            <div class="login">
+                <span id="span_username"></span>
+                <a href="myfavorite.html" class="collection">
+                    <button type="button" class="btn btn-danger">我的收藏</button></a>
+                <a href="javascript:location.href='user/exit';">
+                    <button type="button" class="btn btn-warning">退出</button></a>
+            </div>
+        </div>
+        <div class="header_wrap">
+            <div class="topbar">
+                <div class="logo">
+                    <h3 class="title"><span class="label titleUnder">文章管理系统</span></h3>
+                </div>
+                <div class="search">
+                    <input name="" id="search_input" type="text" placeholder="请输入文章名称" class="search_input" autocomplete="off">
+                    <a href="javascript:;" id="search-button" class="search-button">搜索</a>
+                </div>
+                <div class="hottel">
+                    <div class="hot_pic">
+                        <!-- <img src="images/hot_tel.jpg" alt=""> -->
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- 头部 end -->
+     <!-- 首页导航 -->
+    <div class="navitem">
+        <ul id="category" class="nav">
+           <li><a href="index.html"><button type="button" class="btn btn-primary">首页</button></a></li>
+           <li><a href="route_list.html"><button type="button" class="btn btn-primary">门票</button></a></li>
+           <li><a href="route_list.html"><button type="button" class="btn btn-primary">酒店</button></a></li>
+           <li><a href="route_list.html"><button type="button" class="btn btn-primary">香港车票</button></a></li>
+           <li><a href="route_list.html"><button type="button" class="btn btn-primary">出境游</button></a></li>
+           <li><a href="route_list.html"><button type="button" class="btn btn-primary">国内游</button></a></li>
+           <li><a href="route_list.html"><button type="button" class="btn btn-primary">港澳游</button></a></li>
+           <li><a href="favoriterank.html"><button type="button" class="btn btn-primary">收藏排行榜</button></a></li>
+        </ul>
+    </div>
+    

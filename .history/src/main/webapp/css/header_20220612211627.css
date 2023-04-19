@@ -1,0 +1,10 @@
+.title{
+    overflow: hidden;
+    text-align: center;
+}
+
+.titleUnder{
+    margin-bottom: 10px;
+    font-size: 50px;
+    letter-spacing:10px;
+}

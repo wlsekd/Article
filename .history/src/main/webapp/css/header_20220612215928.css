@@ -1,0 +1,33 @@
+.headerImg{
+        background-image: url("/src/main/webapp/images/hot.jpg");
+        background-attachment: fixed;
+        background-size: cover;
+        background-repeat:no-repeat;
+}
+
+.title{
+    overflow: hidden;
+    
+}
+
+.titleUnder{
+    font-size: 30px;
+    letter-spacing:5px;
+    color: cornflowerblue;
+    
+}
+.logo{
+    padding-top:20px;
+}
+
+.hottel{
+    padding-top: 10px;
+}
+
+.login_out,.login{
+    float: right;
+    line-height: 50px;
+}
+.shortcut{
+    background-color: cornflowerblue;
+}

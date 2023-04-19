@@ -1,0 +1,18 @@
+.headerImg{
+        background-image: url("/src/main/webapp/images/hot.jpg");
+        background-attachment: fixed;
+        background-size: cover;
+        background-repeat:no-repeat;
+}
+
+.title{
+    
+}
+
+.titleUnder{
+    margin-top: 50px;
+    font-size: 30px;
+    letter-spacing:5px;
+    color: cornflowerblue;
+    
+}

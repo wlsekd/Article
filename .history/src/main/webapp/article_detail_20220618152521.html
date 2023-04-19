@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>文章详情</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/route-detail.css">
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/getParameter.js"></script>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script>
+        $(function () {
+            var aid = getParameter("aid");
+            $.get("article/findOne", { aid: aid }, function (data) {
+                var li = '<h1 class="title"><b>' + data.aname + '</b></h1>' +
+                    '<p class="infor">作者:<span>' + data.name + '</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间:<span>' + data.adate + '</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;收藏数:<span>' + data.count + '</span>' +
+                    '<a class="btn" id="favorite" onclick="addFavorite()"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a></p>' +
+                    '<hr><p class="content">' + data.aInner + '</p>';
+                $("#articletext").html(li);
+            })
+        })
+        $(function () {
+            var aid = getParameter("aid");
+            $.get("favorite/isFavorite", { aid: aid }, function (data) {
+                if (data) {
+                    $("#favorite").addClass("already");
+                    $("#favorite").attr("disabled", "disabled");
+                    $("#favorite").removeAttr("onclick");
+                } else {
+
+                }
+            })
+        })
+        function addFavorite() {
+            var aid = getParameter("aid");
+            $.get("user/findOne", {}, function (user) {
+                if (user)//user exist
+                {
+                    $.get("favorite/addFavorite", { aid: aid }, function () {
+                        location.reload();
+                    })
+                }
+                else {
+                    alert("您尚未登录，请登录");
+                    location.href = "http://localhost:8080/article/login.html";
+                }
+            })
+        }
+        //判断文章是否是自己的文章未做
+        $(function () {
+            var aid = getParameter("aid");
+            $.get("article/isMyArticle", { aid: aid }, function (data) {
+                if (data.flag) {
+                    $("#articletext").append('<a href="articlerepair.html?aid=' + aid + '" class="issuebtn"><button type="button" class="btn btn-success">修改文章</button></a><a onclick="javascript:articleDelete()" id="articleDelete" class="issuebtn"><button type="button" class="btn btn-warning">删除文章</button></a>')
+                }
+            })
+
+        })
+        function articleDelete() {
+            var aid = getParameter("aid");
+            alert(aid);
+            $.post("article/articleDelete", { aid: aid }, function (data) {
+                location.href = "myarticle.html";
+            })
+
+        }
+
+    </script>
+</head>
+
+<body>
+    <!--引入头部-->
+    <div id="header"></div>
+    <!-- 详情 start -->
+    <div class="wrap">
+        <div class="bread_box">
+
+        </div>
+        <div class="prosum_box" id="articletext">
+            <h1 class="title"><b>文章标题</b></h1>
+            <p class="infor">
+                作者:<span>胡适</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间:<span>2022-6-13</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;收藏数:<span>2000</span><a
+                    class="btn"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a></p>
+            <hr>
+            <p class="content">
+                “四个全面”战略布局是国家发展的宏伟战略，而“全面深化改革”也是高等教育发展的重要纲领。5月27日~29日，我校成功召开了“第七届教职工代表大会暨工会会员代表大会”，本次会议的成功召开，为我校“十三五”期间的发展指明了方向，明确了任务。推进“招生录取体制改革”是学校深入实施“八大工程”的重点建设任务，更是教务处当前工作中的一项具体措施。
+
+                教务处以服务地方经济建设发展为目标，完善招生录取工作制度为手段，开创工作思维，开拓工作思路，开辟新的发展方向。在2016年度的云南省“专升本”招生录取工作过程中，我校在继续开展好传统招生录取模式工作任务的基础上，成功的探索了“免试录取”模式。在上级教育主管部门的正确领导下，我校积极思考、严密组织、认真执行，并于6月14日组织“专家组”对符合条件的申报者开展了“免试录取”综合测试工作，测试结果经6月14日~20日的公示，没有接收到任务投诉与举报，目前正在开展后期“特殊类型招生”的录取程序，总体看来，本次改革已实现了我校“首批免试录取考生”的录取，并推动学校招生规模的进一步扩大（截止到7月4日，专升本扩招比例为54%、2016年专升本计划完成率为154%），改革工作取得了预期的效果。
+
+                本次“特殊类型招生改革”的成功探索，既积累了教务管理部门开展多元化人才评价的经验，更是教务处结合“两学一做”工作、积极贯彻落实学校“两会”的相关精神的具体体现。我们将在认真总结本次改革经验的基础，进一步思考与谋划相关工作，不断推进“招生录取体制改革”工作进入深水区。
+            </p>
+        </div>
+        <hr>
+        <div class="prosum_box">
+            <div class="form-group">
+                <label for="aInner">正文</label>
+                <textarea class="form-control" rows="3" name="aInner" id="aInner"></textarea>
+                <button type="button" class="btn btn-success" id="comments">提交</button>
+            </div>
+            
+            <ul class="media-list">
+                <li class="media">
+                    <div class="media-body">
+                        <h4 class="media-heading">我是标题 - 一级</h4>
+                        <p>我是一大串重复的内容；我是一大串重复的内容；我是一大串重复的内容；我是一大串重复的内容；我是一大串重复的内容。</p>
+                        <span>2022-6-13</span>
+                        <!-- <ul class="media-list">
+                        <li class="media">
+                            
+                            <div class="media-body">
+                                <h4 class="media-heading">我是标题 - 二级</h4>
+                                <p>我是一大串重复的内容；我是一大串重复的内容；我是一大串重复的内容；我是一大串重复的内容；我是一大串重复的内容。</p>
+                            </div>
+                        </li>
+                        <li class="media">
+                            
+                            <div class="media-body">
+                                <h4 class="media-heading">我是标题 - 二级</h4>
+                                <p>我是一大串重复的内容；我是一大串重复的内容；我是一大串重复的内容；我是一大串重复的内容；我是一大串重复的内容。</p>
+                            </div>
+                        </li>
+                    </ul> -->
+                    </div>
+                </li>
+                <li class="media">
+                    <div class="media-body">
+                        <span style="float:right ;margin-right: 50px;">2022-6-13</span>
+                        <h4 class="media-heading">我是标题 - 一级</h4>
+                        <p>我是一大串重复的内容；我是一大串重复的内容；我是一大串重复的内容；我是一大串重复的内容；我是一大串重复的内容。</p>
+                        <span>2022-6-13</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <hr>
+    <!-- 详情 end -->
+
+    <!--引入头部-->
+    <div id="footer"></div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery-3.3.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--导入布局js，共享header和footer-->
+    <script type="text/javascript" src="js/include.js"></script>
+    <script src="js/getParameter.js"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>

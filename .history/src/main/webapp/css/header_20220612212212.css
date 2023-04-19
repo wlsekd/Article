@@ -1,0 +1,16 @@
+.headerImg{
+        background-image: url("/src/main/webapp/images/hot.jpg");
+        background-attachment: fixed;
+        background-size: cover;
+        background-repeat:no-repeat;
+}
+
+.title{
+    overflow: hidden;
+}
+
+.titleUnder{
+    margin-top: 30px;
+    font-size: 50px;
+    letter-spacing:10px;
+}

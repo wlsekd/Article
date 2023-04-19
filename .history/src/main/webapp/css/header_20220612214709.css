@@ -1,0 +1,23 @@
+.headerImg{
+        background-image: url("/src/main/webapp/images/hot.jpg");
+        background-attachment: fixed;
+        background-size: cover;
+        background-repeat:no-repeat;
+}
+
+.title{
+    overflow: hidden;
+    
+}
+
+.titleUnder{
+    margin-top: 20px;
+    font-size: 30px;
+    letter-spacing:10px;
+    color: cornflowerblue;
+    
+}
+
+.search{
+    width: 470px;
+}

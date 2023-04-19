@@ -1,0 +1,28 @@
+.prosum_box form{
+    margin-left: 100px;
+    margin-right: 100px;
+}
+.prosum_box{
+    width: 100%;
+}
+.submit_btn button {
+    width: 120px;
+    height: 40px;
+    border: none;
+    background-color: cornflowerblue;   
+    text-align: center;
+    line-height: 40px;
+    color: #000;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    float: left;
+}
+.submit_btn{
+    margin-bottom: 20px;
+    float: right;
+}
+.takeOn{
+    margin-left: 50px;
+    font-size: 50px;
+}
